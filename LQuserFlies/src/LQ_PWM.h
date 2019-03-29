@@ -14,8 +14,8 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define __LQPWM_H__
 
 
-extern void LQ_SetMotorDty(uint8_t num, short duty);
-extern void LQ_SetServoDty(uint16_t duty);
+extern void My_SetMotorDty(uint8_t num, short duty);
+extern void My_SetServoDty(uint16_t duty);
 
 extern void Test_Servo(void);//¶æ»ú²âÊÔ
 extern void Test_Motor(void);//µç»ú²âÊÔ
@@ -23,9 +23,9 @@ void Test_Servo_K(void);
 extern void LQPWM_Init(void);
 void Test_PWM_nCH(void);
 
-extern void LQ_PWM_Init(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t Frequency);
-extern void LQ_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t duty);
-extern void LQ_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_t duty1, uint16_t duty2);
+extern void My_PWM_Init(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t Frequency);
+extern void My_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t duty);
+extern void My_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_t duty1, uint16_t duty2);
 #endif 
 
 

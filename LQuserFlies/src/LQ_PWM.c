@@ -1,13 +1,4 @@
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【平    台】北京龙邱智能科技LPC546XX核心板
-【编    写】CHIUSIR
-【备    注】
-【软件版本】V1.0
-【最后更新】2017年11月27日
-【相关信息参考下列地址】
-【网    站】http://www.lqist.cn
-【淘宝店铺】http://shop36265907.taobao.com
-【交流邮箱】chiusir@163.com
+/**********************************************************************
 ----------------------------------------------------------------
 使用PWM需要完成以下几个步骤：
 第一步(共五步)，选择所用通道及管脚，开启通道选择宏定义    
@@ -35,7 +26,7 @@ PWM2, kPWM_Module_2, kPWM_PwmA   D9
 PWM2, kPWM_Module_2, kPWM_PwmB   A10    电机4接口
 PWM2, kPWM_Module_3, kPWM_PwmA   M3     舵机接口
 PWM2, kPWM_Module_3, kPWM_PwmB   M4     舵机接口
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+*****************************************************************/
 #include "include.h" 
 
 #define DUTY_MAX  10000     //duty最大值
@@ -131,12 +122,12 @@ void Test_PWM_nCH(void)
     uint32_t pwmVal = 4;  
     
      /*初始化电机PWM接口  */
-    LQ_PWM_Init(PWM2, kPWM_Module_0, kPWM_PwmA_B, 100);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz      A8 A9
-    LQ_PWM_Init(PWM2, kPWM_Module_1, kPWM_PwmA_B, 1000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     B9 C9
-    LQ_PWM_Init(PWM2, kPWM_Module_2, kPWM_PwmB, 10000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz      A10
-    LQ_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 20000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz    L5 M5
+    My_PWM_Init(PWM2, kPWM_Module_0, kPWM_PwmA_B, 100);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz      A8 A9
+    My_PWM_Init(PWM2, kPWM_Module_1, kPWM_PwmA_B, 1000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     B9 C9
+    My_PWM_Init(PWM2, kPWM_Module_2, kPWM_PwmB, 10000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz      A10
+    My_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 20000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz    L5 M5
     
-    LQ_PWM_Init(PWM2, kPWM_Module_3, kPWM_PwmA_B,  200);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     M3 M4
+    My_PWM_Init(PWM2, kPWM_Module_3, kPWM_PwmA_B,  200);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     M3 M4
 
     while (1U)
     {
@@ -148,27 +139,27 @@ void Test_PWM_nCH(void)
         {
             pwmVal =2;
         }
-        LQ_PWMA_B_SetDuty(PWM1, kPWM_Module_3, pwmVal*100, pwmVal*50); 
-        LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_0, pwmVal*100, pwmVal*50);
-        LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_1, pwmVal*100, pwmVal*50);
-        LQ_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , pwmVal*100);
-        LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_3, pwmVal*100, pwmVal*50);  
+        My_PWMA_B_SetDuty(PWM1, kPWM_Module_3, pwmVal*100, pwmVal*50); 
+        My_PWMA_B_SetDuty(PWM2, kPWM_Module_0, pwmVal*100, pwmVal*50);
+        My_PWMA_B_SetDuty(PWM2, kPWM_Module_1, pwmVal*100, pwmVal*50);
+        My_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , pwmVal*100);
+        My_PWMA_B_SetDuty(PWM2, kPWM_Module_3, pwmVal*100, pwmVal*50);  
     }
 }
 
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/*****************************************************************************************************************************************************************************************************
 【作  者】Z
 【参数值】uint8_t pwm_num = 1 表示 PWM1 模块，pwm_num = 2 表示 PWM2 模块，
           pwm_num = 3 表示 PWM3 模块，pwm_num = 4 表示 PWM4 模块
           pwm_submodule_t subModule  pwm子模块  
 【软件版本】V1.0
 【最后更新】2018年10月17日 
-【函数名】 LQ_PWM_InitPins
+【函数名】 My_PWM_InitPins
 【返回值】无
 【备注】  函数只初始化PWM模块的PWMA引脚，使用PWMB引脚的请自行初始化
 【实例】LQ_PWM_InitPins(1, kPWM_Module_0)  //初始化PWM1的kPWM_Module_0子模块的 PWMA引脚
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+*****************************************************************************************************************************************************************************************************************************/
 /*   
  
   PWM模块    |      subModule0                          |     subModule1                               |     subModule2                          |      subModule3
@@ -182,7 +173,7 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
   PWM4       |IOMUXC_GPIO_AD_B1_08_FLEXPWM4_PWMA00      | IOMUXC_GPIO_AD_B1_09_FLEXPWM4_PWMA01         |IOMUXC_GPIO_B1_14_FLEXPWM4_PWMA02        |IOMUXC_GPIO_B1_15_FLEXPWM4_PWMA03
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 */
-void LQ_PWM_InitPins(uint8_t pwm_num, pwm_submodule_t subModule, pwm_channels_t pwm_channels)
+void My_PWM_InitPins(uint8_t pwm_num, pwm_submodule_t subModule, pwm_channels_t pwm_channels)
 {
     CLOCK_EnableClock(kCLOCK_Iomuxc);          /* 打开io时钟 */
     
@@ -400,34 +391,35 @@ void LQ_PWM_InitPins(uint8_t pwm_num, pwm_submodule_t subModule, pwm_channels_t 
 }
 
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
+/*************************************************************************************************************************************
+【作  者】
 【参数值】
 【软件版本】V1.0
-【最后更新】2018年10月16日 
-【函数名】 LQ_PWM4_Init
+【最后更新】
+【函数名】 My_PWM4_Init
 【返回值】无
 【备注】  PWM时钟为200MHz的32分频 = 6250 000  PWM的VAL1寄存器为16位 最大值65535 PWM的最低频率 = 6250 000 / VAL1  = 96Hz  
            如果要使用96hz以下的PWM信号，可以降低PWM的时钟频率（增加pwmConfig.prescale的分频系数或者降低PWM时钟源kCLOCK_IpgClk频率）
 【实例】  LQ_PWM_Init(PWM2, kPWM_Module_0, kPWM_PwmA, 1000); //PWM2的kPWM_Module_0子模块 初始化为频率1000hz
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-void LQ_PWM_Init(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t Frequency)
+***************************************************************************************************************************************/
+
+void My_PWM_Init(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t Frequency)
 {
     if(base == PWM1)
     {
-        LQ_PWM_InitPins(1, subModule, pwm_channels); //管脚复用选择
+        My_PWM_InitPins(1, subModule, pwm_channels); //管脚复用选择
     }
     else if(base == PWM2)
     {
-        LQ_PWM_InitPins(2, subModule, pwm_channels); //管脚复用选择
+        My_PWM_InitPins(2, subModule, pwm_channels); //管脚复用选择
     }
     else if(base == PWM3)
     {
-        LQ_PWM_InitPins(3, subModule, pwm_channels); //管脚复用选择
+        My_PWM_InitPins(3, subModule, pwm_channels); //管脚复用选择
     }
     else if(base == PWM4)
     {
-        LQ_PWM_InitPins(4, subModule, pwm_channels); //管脚复用选择
+        My_PWM_InitPins(4, subModule, pwm_channels); //管脚复用选择
     }
     else printf("Please input PWM1 ~ PWM4 \n"); 
     CLOCK_SetDiv(kCLOCK_AhbDiv, 0x0); /* Set AHB PODF to 0, divide by 1 */ //600MHz 
@@ -510,18 +502,18 @@ void LQ_PWM_Init(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_c
   
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】Z
 【参数值】  duty最大值默认为10000，当duty = 10000时，占空比为100%  可修改宏定义DUTY_MAX修改duty最大值
 【软件版本】V1.0
-【最后更新】2018年10月16日 
-【函数名】 LQ_PWM_SetDuty
+【最后更新】 
+【函数名】 My_PWM_SetDuty
 【返回值】无  如果同时使用subModule 的A B ，可以先设置A的Duty 再设置B的Duty 最后设置pwm的 load ok位  不然pwm容易卡死或者丢失
 【备注】默认使用kPWM_PwmA，对齐方式kPWM_SignedCenterAligned， 可以自行修改  
-【实例】LQ_PWM_SetDuty(PWM1, kPWM_Module_0, kPWM_PwmA, 5000)   //设置PWM1的kPWM_Module_0子模块的kPWM_PwmA 占空比为50%
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+【实例】My_PWM_SetDuty(PWM1, kPWM_Module_0, kPWM_PwmA, 5000)   //设置PWM1的kPWM_Module_0子模块的kPWM_PwmA 占空比为50%
+*************************************************************************************************************************/
 
-inline void LQ_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t duty)
+inline void My_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channels_t pwm_channels, uint16_t duty)
 {
     assert(duty <= DUTY_MAX);
     PWM_UpdateDuty(base, subModule, pwm_channels, kPWM_SignedCenterAligned, duty); //设置DUTY  对齐方式kPWM_SignedCenterAligned， 可以自行修改
@@ -529,7 +521,7 @@ inline void LQ_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channe
     PWM_SetPwmLdok(base, 1u<<subModule, true);//设置pwm的 load ok位   如果同时使用subModule 的A B ，可以先设置A的Duty 再设置B的Duty 最后设置pwm的 load ok位  不然pwm容易卡死或者丢失
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】Z
 【参数值】  duty最大值默认为10000，当duty = 10000时，占空比为100%  可修改宏定义DUTY_MAX修改duty最大值
 【软件版本】V1.0
@@ -538,8 +530,9 @@ inline void LQ_PWM_SetDuty(PWM_Type *base, pwm_submodule_t subModule, pwm_channe
 【返回值】无  如果同时使用subModule 的A B ，可以先设置A的Duty 再设置B的Duty 最后设置pwm的 load ok位  不然pwm容易卡死或者丢失
 【备注】默认使用kPWM_PwmA，对齐方式kPWM_SignedCenterAligned， 可以自行修改  
 【实例】LQ_PWMA_B_SetDuty(PWM1, kPWM_Module_0, 5000, 1000)   //设置PWM1的kPWM_Module_0子模块的kPWM_PwmA 占空比为50%,PWMB占空比10%
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-inline void LQ_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_t dutyA, uint16_t dutyB)
+*************************************************************************************************************************/
+
+inline void My_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_t dutyA, uint16_t dutyB)
 {
     assert( dutyA <= DUTY_MAX);
     assert( dutyB <= DUTY_MAX);
@@ -548,7 +541,7 @@ inline void LQ_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_
     PWM_SetPwmLdok(base, 1u<<subModule, true);//设置pwm的 load ok位   如果同时使用subModule 的A B ，可以先设置A的Duty 再设置B的Duty 最后设置pwm的 load ok位  不然pwm容易卡死或者丢失
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】CHIUSIR
 【功能说明】舵机占空比控制
 【软件版本】V1.0
@@ -558,15 +551,16 @@ inline void LQ_PWMA_B_SetDuty(PWM_Type *base, pwm_submodule_t subModule, uint16_
 【注意】  初次使用此函数时，舵机不要装舵盘，防止舵机卡死，设置中值后再装车，可以自行设置中值
 【参数值】舵机高电平时间在 500--2500us内  可以根据设置的PWM频率自己计算duty 这里舵机中值为3440,PWM频率200Hz 中值高电平时间为 3440/10000 * 5ms = 1.72ms
 LQ_SetServoDty(duty);
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-inline void LQ_SetServoDty(uint16_t duty)  //设置舵机      舵机中值 1.72ms高电平的PWM波    1.5~2.0ms之间     
+*************************************************************************************************************************/
+
+inline void My_SetServoDty(uint16_t duty)  //设置舵机      舵机中值 1.72ms高电平的PWM波    1.5~2.0ms之间     
 {
     if(duty > 3740) duty = 3740;
     if(duty < 3140) duty = 3140;
-    LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_3, duty, duty); //M3 M4
+    My_PWMA_B_SetDuty(PWM2, kPWM_Module_3, duty, duty); //M3 M4
 //    LQ_PWM_SetDuty(PWM2, kPWM_Module_3, kPWM_PwmA, duty); //M3   
 }
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】Z
 【功能说明】舵机占空比控制
 【软件版本】V1.0
@@ -575,8 +569,9 @@ inline void LQ_SetServoDty(uint16_t duty)  //设置舵机      舵机中值 1.72ms高电平
 【返回值】电机正反转可以调节电机接线调整，也可以控制PWM调整  如果电机正反转和程序中定义的不一样，可以自行修改
 【参数值】num: 电机编号 1~4   duty： -DUTY_MAX ~ DUTY_MAX   可以正反转
 LQ_SetMotorDty(1, -2000)  //电机1  反转  占空比  2000 / 10000 
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-inline void LQ_SetMotorDty(uint8_t num, short duty)  //设置电机占空比     
+************************************************************************************************************************/
+
+inline void My_SetMotorDty(uint8_t num, short duty)  //设置电机占空比     
 {
     assert(num < 5);
     
@@ -585,46 +580,46 @@ inline void LQ_SetMotorDty(uint8_t num, short duty)  //设置电机占空比
         case 1:
             if(duty >= 0)  //  正转  电机正反转可以调节电机接线调整，也可以控制PWM调整  如果电机正反转和程序中定义的不一样，可以自行修改
             {
-                LQ_PWMA_B_SetDuty(PWM1, kPWM_Module_3, 0, duty);
+                My_PWMA_B_SetDuty(PWM1, kPWM_Module_3, 0, duty);
             }
             else
             {
-                LQ_PWMA_B_SetDuty(PWM1, kPWM_Module_3, -duty, 0);
+                My_PWMA_B_SetDuty(PWM1, kPWM_Module_3, -duty, 0);
             }
             break;
             
         case 2:
             if(duty >= 0)  //  正转  电机正反转可以调节电机接线调整，也可以控制PWM调整  如果电机正反转和程序中定义的不一样，可以自行修改
             {
-                LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_0, 0, duty);
+                My_PWMA_B_SetDuty(PWM2, kPWM_Module_0, 0, duty);
             }
             else
             {
-                LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_0, -duty, 0);
+                My_PWMA_B_SetDuty(PWM2, kPWM_Module_0, -duty, 0);
             }
             break;
             
         case 3:
             if(duty >= 0)  //  正转  电机正反转可以调节电机接线调整，也可以控制PWM调整  如果电机正反转和程序中定义的不一样，可以自行修改
             {
-                LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_1, 0, duty);
+                My_PWMA_B_SetDuty(PWM2, kPWM_Module_1, 0, duty);
             }
             else
             {
-                LQ_PWMA_B_SetDuty(PWM2, kPWM_Module_1, -duty, 0);
+                My_PWMA_B_SetDuty(PWM2, kPWM_Module_1, -duty, 0);
             }
             break;
             
         case 4:
             if(duty >= 0)  //  正转  电机正反转可以调节电机接线调整，也可以控制PWM调整  如果电机正反转和程序中定义的不一样，可以自行修改
             {
-                LQ_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , 0);
-                LQ_PWM_SetDuty(PWM1,    kPWM_Module_1, kPWM_PwmA , duty);
+                My_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , 0);
+                My_PWM_SetDuty(PWM1,    kPWM_Module_1, kPWM_PwmA , duty);
             }
             else
             {
-                LQ_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , -duty);
-                LQ_PWM_SetDuty(PWM1,    kPWM_Module_1, kPWM_PwmA , 0);
+                My_PWM_SetDuty(PWM2,    kPWM_Module_2, kPWM_PwmB , -duty);
+                My_PWM_SetDuty(PWM1,    kPWM_Module_1, kPWM_PwmA , 0);
             }
             break;
     }
@@ -653,7 +648,7 @@ short Servo_K_Ctrl(float error)
 	pid_speed_LastErr = ThisErr;
 	return speed_pid_out;
 }
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】Z
 【参数值】
 【软件版本】V1.0
@@ -663,7 +658,8 @@ short Servo_K_Ctrl(float error)
 【参数值】调整K车舵机角度   舵机的分压电阻用5V供电 实测 舵机最左时 电压2.1V  舵机最右时 电压2.9V（可以根据自己测量的电压自行调整）
 【实例】
 【参数值】
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+************************************************************************************************************************/
+
 void Control_Servo_K(float bat,float angle)
 {
     char txt[16];
@@ -688,13 +684,13 @@ void Control_Servo_K(float bat,float angle)
     {
         PWM *= 7000/batv0;                //如果电压大于7V  限制占空比 防止驱动输出电压高于7V
     } 
-    LQ_SetMotorDty(1, PWM);                //输出PWM
+    My_SetMotorDty(1, PWM);                //输出PWM
     
     sprintf(txt,"bat: %4.2f V",(float)batv0/1000.0f);
     TFTSPI_P8X16Str(1,3,(uint8_t*)txt,u16RED,u16BLUE);
 
 }
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+/************************************************************************************************************************
 【作  者】CHIUSIR
 【参数值】
 【软件版本】V1.0
@@ -706,7 +702,7 @@ void Control_Servo_K(float bat,float angle)
 【实例】初次使用此函数时，舵机不要装舵盘，防止舵机卡死，设置中值后再装车，可以自行设置中值
 【参数值】舵机高电平时间在 500--2500us内  可以根据设置的PWM频率自己计算duty 这里舵机中值为3440,PWM频率200Hz 中值高电平时间为 3440/10000 * 5ms = 1.72ms
 LQ_SetServoDty(duty);
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+************************************************************************************************************************/
 void Test_Servo(void)
 {
     char txt[16];
@@ -718,9 +714,9 @@ void Test_Servo(void)
     
     /*初始化舵机PWM接口  kPWM_PwmA  M3  M4*/
 //    LQ_PWM_Init(PWM2, kPWM_Module_3, kPWM_PwmA,  200);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz  M3
-    LQ_PWM_Init(PWM2, kPWM_Module_3, kPWM_PwmA_B,  200);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz //M3 M4
+    My_PWM_Init(PWM2, kPWM_Module_3, kPWM_PwmA_B,  200);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz //M3 M4
     
-    LQ_SetServoDty(3440);  //中值
+    My_SetServoDty(3440);  //中值
     
     TFTSPI_P8X16Str(1,0,(uint8_t*)"LQ Servo PWM",u16RED,u16BLUE);
     
@@ -733,15 +729,15 @@ void Test_Servo(void)
             break;
             case 1:
                 servopwm -= 10;
-                LQ_SetServoDty(3440 + servopwm);//刷新servopwm频率
+                My_SetServoDty(3440 + servopwm);//刷新servopwm频率
                 break;           
             case 2:           
                 servopwm = 0;
-                LQ_SetServoDty(3440 + servopwm);//刷新servopwm频率
+                My_SetServoDty(3440 + servopwm);//刷新servopwm频率
                 break;
             case 3:           
                 servopwm += 10;
-                LQ_SetServoDty(3440 + servopwm);//刷新servopwm频率
+                My_SetServoDty(3440 + servopwm);//刷新servopwm频率
                 break;
         }
         sprintf(txt,"PWM: %4.2f %",(float)servopwm/100.0f);
@@ -755,8 +751,8 @@ void Test_Servo(void)
         delayms(50);
     }
 }
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
+/************************************************************************************************************************
+
 【参数值】
 【软件版本】V1.0
 【最后更新】2019年02月27日 
@@ -766,7 +762,8 @@ void Test_Servo(void)
 //通过母板按键和舵机接口，测试舵机转向及舵机标定，显示于TFT1.8
 【实例】
 【参数值】
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+************************************************************************************************************************/
+
 void Test_Servo_K(void)
 {
     char txt[16]; 
@@ -778,7 +775,7 @@ void Test_Servo_K(void)
     LQ_KEY_Init();                //按键及输入口初始化   
     My_ADC_Init(ADC2);             //ADC初始化
     /*初始化舵机PWM接口 */
-    LQ_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 2000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     L5 M5
+    My_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 2000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     L5 M5
     Servo_K_pidInit(12000, 300);                        //初始化PID控制器
     TFTSPI_P8X16Str(1,0,(uint8_t*)"LQ Servo_K PWM",u16RED,u16BLUE);
     
@@ -815,17 +812,17 @@ void Test_Servo_K(void)
 //        delayms(50);
     }
 }
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】CHIUSIR
+/*********************************************************************
+【作  者】
 【参数值】
 【软件版本】V1.0
-【最后更新】2017年10月27日 
+【最后更新】
 【函数名】
 【返回值】无
 【参数值】
 //电机1： 使用 L5  M5   电机2：使用A8  A9  电机3：使用 B9 C9  电机4：A10 J1
 【实例】
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+***********************************************************************/
 void Test_Motor(void)
 {    
     char txt[16];
@@ -834,12 +831,12 @@ void Test_Motor(void)
     TFTSPI_CLS(u16BLUE);           //清屏
     LQ_KEY_Init();          //按键及输入口初始化   
     /*初始化电机PWM接口   */
-    LQ_PWM_Init(PWM2, kPWM_Module_0, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     A8 A9
-    LQ_PWM_Init(PWM2, kPWM_Module_1, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     B9 C9
-    LQ_PWM_Init(PWM2, kPWM_Module_2, kPWM_PwmB,   12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     A10
-    LQ_PWM_Init(PWM1, kPWM_Module_1, kPWM_PwmA,   12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     J1
-    LQ_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     L5 M5
-    TFTSPI_P8X16Str(3,0,(uint8_t*)"LQ Motor PWM",u16RED,u16BLUE);
+    My_PWM_Init(PWM2, kPWM_Module_0, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     A8 A9
+    My_PWM_Init(PWM2, kPWM_Module_1, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     B9 C9
+    My_PWM_Init(PWM2, kPWM_Module_2, kPWM_PwmB,   12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     A10
+    My_PWM_Init(PWM1, kPWM_Module_1, kPWM_PwmA,   12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     J1
+    My_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 12000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     L5 M5
+    TFTSPI_P8X16Str(3,0,(uint8_t*)"MY Motor PWM",u16RED,u16BLUE);
     
     while (1)
     {        
@@ -850,25 +847,25 @@ void Test_Motor(void)
             case 1:
                 motorpwm -= 100;
                 if(motorpwm < -10000) motorpwm = -10000;
-                LQ_SetMotorDty(1, motorpwm);
-                LQ_SetMotorDty(2, motorpwm);
-                LQ_SetMotorDty(3, motorpwm);
-                LQ_SetMotorDty(4, motorpwm);
+                My_SetMotorDty(1, motorpwm);
+                My_SetMotorDty(2, motorpwm);
+                My_SetMotorDty(3, motorpwm);
+                My_SetMotorDty(4, motorpwm);
                 break;           
             case 3:           
                 motorpwm += 100;
                 if(motorpwm > 10000) motorpwm = 10000;
-                LQ_SetMotorDty(1, motorpwm);
-                LQ_SetMotorDty(2, motorpwm);
-                LQ_SetMotorDty(3, motorpwm);
-                LQ_SetMotorDty(4, motorpwm);
+                My_SetMotorDty(1, motorpwm);
+                My_SetMotorDty(2, motorpwm);
+                My_SetMotorDty(3, motorpwm);
+                My_SetMotorDty(4, motorpwm);
                 break;
             case 2:
                 motorpwm = 0;
-                LQ_SetMotorDty(1, motorpwm);
-                LQ_SetMotorDty(2, motorpwm);
-                LQ_SetMotorDty(3, motorpwm);
-                LQ_SetMotorDty(4, motorpwm);
+                My_SetMotorDty(1, motorpwm);
+                My_SetMotorDty(2, motorpwm);
+                My_SetMotorDty(3, motorpwm);
+                My_SetMotorDty(4, motorpwm);
             break;
         }
         
