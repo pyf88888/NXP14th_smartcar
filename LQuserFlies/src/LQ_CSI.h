@@ -2,10 +2,10 @@
 #define __LQ_CSI_H
 
 
-#define LQMT9V034    //选择使用神眼摄像头模块
+#define NJUST_MT9V034    //选择使用神眼摄像头模块
 //#define LQOV7725   //两者选其一
 
-#ifdef LQMT9V034 //LQMT9V034模块
+#ifdef NJUST_MT9V034 //NJUST_MT9V034模块
 #define APP_CAMERA_WIDTH  (IMAGEW)
 #define APP_CAMERA_HEIGHT (IMAGEH/2)  //一个uint16_t里面装了两个像素， 一行IMAGEW 里面其实装了两行的像素点，所以高度/2
 #define APP_BPP 2 //像素格式，
@@ -27,7 +27,12 @@
 
 
 #define APP_CAMERA_CONTROL_FLAGS (kCAMERA_HrefActiveHigh | kCAMERA_DataLatchOnRisingEdge) //使用摄像头的上升沿
-extern void LQ_Camera_Init(void);
+
+static void BOARD_PullCameraPowerDownPin(bool pullUp) ; //闪光灯
+static void BOARD_PullCameraResetPin(bool pullUp) ; //摄像头复位引脚
+
+
+extern void My_Camera_Init(void);
 extern camera_device_handle_t cameraDevice;    
 extern camera_receiver_handle_t cameraReceiver;
 extern uint16_t csiFrameBuf[APP_CAMERA_FRAME_BUFFER_COUNT][APP_CAMERA_HEIGHT][APP_CAMERA_WIDTH];

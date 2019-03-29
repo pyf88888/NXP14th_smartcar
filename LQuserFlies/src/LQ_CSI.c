@@ -1,15 +1,14 @@
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【平    台】北京龙邱智能科技RT1052核心板
-【编    写】Z
-【备    注】
-【软件版本】V1.0
-【最后更新】2018年11月27日
-【相关信息参考下列地址】
-【网    站】http://www.lqist.cn
-【淘宝店铺】http://shop36265907.taobao.com
-【交流邮箱】chiusir@163.com
-----------------------------------------------------------------
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+/**********************************************************************************************************/
+//【修改说明】：修改部分带LQ首字母的函数和变量，由于函数关系复杂，故部分变量暂时无法修改
+
+//【软件版本】V1.0
+//【最后更新】2019年3月29日 
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】
+/**********************************************************************************************************/
+
 
 #include "include.h"
 
@@ -36,17 +35,20 @@ static void BOARD_PullCameraResetPin(bool pullUp)  //摄像头复位引脚
     return;
 }
 
-#ifdef LQMT9V034 //LQMT9V034模块
-static LQMT9V034_resource_t LQMT9V034Resource = {   //摄像头初始化结构体
+#ifdef NJUST_MT9V034 //NJUST_MT9V034模块
+static LQMT9V034_resource_t  NJUST_MT9V034Resource = {   //摄像头初始化结构体
     .sccbI2C = LPI2C1,
  
     .inputClockFreq_Hz = 27000000,
 };
 
 camera_device_handle_t cameraDevice = {           //摄像头驱动配置结构体
-    .resource = &LQMT9V034Resource,
+    .resource = &NJUST_MT9V034Resource,
     .ops = &LQMT9V034_ops,
 };
+
+
+
 #else //LQOV7725模块
 static ov7725_resource_t ov7725Resource = {       //摄像头初始化结构体
     .sccbI2C = LPI2C1,
@@ -82,16 +84,18 @@ void CSI_IRQHandler(void)
 }
 
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
-【功能说明】摄像头CSI接口和I2C接口时钟配置
-【软件版本】V1.0
-【最后更新】2018年10月18日 
-【函数名】
-【返回值】无
-【参数值】无
-【实例】 
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+/*****************************************************************************/
+//【作  者】
+//【功能说明】摄像头CSI接口和I2C接口时钟配置
+//【软件版本】V1.0
+//【最后更新】 
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】 
+/*****************************************************************************/
+
+
 void BOARD_InitCameraResource(void)
 {
     LPI2C_Init(LPI2C1, 400000);
@@ -131,18 +135,22 @@ void BOARD_InitCameraResource(void)
 //    GPIO_PinInit(GPIO1, 4, &pinConfig);
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
-【功能说明】摄像头初始化
-【软件版本】V1.0
-【最后更新】2018年10月18日 
-【函数名】
-【返回值】无
-【参数值】无
-【实例】 
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+
+/*****************************************************************************/
+//【作  者】Z
+//【功能说明】摄像头初始化
+//【软件版本】V1.0
+//【最后更新】2018年10月18日 
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】 
+/*****************************************************************************/
+
+
+
 camera_config_t cameraConfig;   //摄像头配置结构体
-#ifdef LQMT9V034 //LQMT9V034模块
+#ifdef NJUST_MT9V034 //NJUST_MT9V034
     // Configure camera device and receiver.
     camera_config_t cameraConfig = {
         .pixelFormat   = kVIDEO_PixelFormatYUYV,//kVIDEO_PixelFormatYUYV,//kVIDEO_PixelFormatBGR565,
@@ -164,7 +172,9 @@ camera_config_t cameraConfig;   //摄像头配置结构体
         .framePerSec = 75,                                                        //fps 修改需要修改plck 和 分辨率 配合
     };
 #endif
-void LQ_Camera_Init(void)  
+    
+    
+void My_Camera_Init(void)  
 {
     BOARD_InitCSIPins();      //摄像头CSI管脚复用  
     BOARD_InitLPI2C1Pins();   //摄像头 I2C1管脚复用  
@@ -189,23 +199,25 @@ void LQ_Camera_Init(void)
     delayms(200);        //延时200毫秒  摄像头不是重新上电 可以不要延时
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
-【功能说明】上位机看图 不要用DAPlink的串口，容易卡死 使用山外上位机 使用神眼时上位机设置为灰度 7725时，上位机设置为RGB565 小端模式
-【软件版本】V1.0
-【最后更新】2018年10月18日 
-【函数名】
-【返回值】无
-【参数值】无
-【实例】 
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+/****************************************************************************************************************************/
+//【作  者】Z
+//【功能说明】上位机看图 不要用DAPlink的串口，容易卡死 使用山外上位机 使用神眼时上位机设置为灰度 7725时，上位机设置为RGB565 小端模式
+//【软件版本】V1.0
+//【最后更新】2018年10月18日 
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】 
+/****************************************************************************************************************************/
+
+
 void Test_Camera_Reprot(void)
 {
     uint32_t fullCameraBufferAddr;  
 #if (defined LQOV7725) && (defined LQOV7725YUV)
     cameraConfig.pixelFormat = kVIDEO_PixelFormatYUYV;
 #endif
-    LQ_Camera_Init();
+    My_Camera_Init();
     delayms(200);        //延时200毫秒   
     uint8_t count = 0;
     /* Disable I cache and D cache */
@@ -231,7 +243,7 @@ void Test_Camera_Reprot(void)
         LQ_UART_PutChar(LPUART1, 0xfe);  //帧头
         for(int i = 0; i < APP_CAMERA_HEIGHT; i++)  //分辨率越高 ，出图越慢
         {
-#if  (defined LQMT9V034) || (defined LQOV7725RGB)   //上位机看 7725 RGB565图像 和 神眼灰度图像  7725使用RGB565格式 cameraConfig = { .pixelFormat = kVIDEO_PixelFormatRGB565 }
+#if  (defined NJUST_MT9V034) || (defined LQOV7725RGB)   //上位机看 7725 RGB565图像 和 神眼灰度图像  7725使用RGB565格式 cameraConfig = { .pixelFormat = kVIDEO_PixelFormatRGB565 }
             for(int j = 0; j < APP_CAMERA_WIDTH * 2; j++)
             {
                 if(*((uint8_t *)fullCameraBufferAddr +  i * APP_CAMERA_WIDTH * 2 + j) == 0xfe )  //防止错误发送帧尾

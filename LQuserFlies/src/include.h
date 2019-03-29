@@ -17,6 +17,8 @@
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #ifndef _LQ_INLUDE_FILES_H_
 #define _LQ_INLUDE_FILES_H_
+
+
     #include "stdio.h"
     #include "math.h"
 //SDKµ×²ãÇý¶¯¿â

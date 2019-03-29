@@ -28,7 +28,7 @@ void Test_SGP18_OV7725(void)
 {
     TFTSPI_Init();               //TFT1.8³õÊ¼»¯     
     uint32_t fullCameraBufferAddr;     
-    LQ_Camera_Init();
+    My_Camera_Init();
 //    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR)) {   
 //        SCB_DisableICache();
 //    }
@@ -73,7 +73,7 @@ void Test_SGP18_Camera(void)
 #ifdef LQOV7725
     cameraConfig.pixelFormat = kVIDEO_PixelFormatYUYV;
 #endif
-    LQ_Camera_Init();
+    My_Camera_Init();
     delayms(200);        //ÑÓÊ±200ºÁÃë  
     uint16_t color = 0;
 //    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR)) {   
@@ -434,7 +434,7 @@ void Test_OLED_Camera(void)
     LCD_Show_Frame80();
     cameraConfig.pixelFormat = kVIDEO_PixelFormatYUYV;
 #endif
-    LQ_Camera_Init();
+    My_Camera_Init();
     delayms(200);        //ÑÓÊ±200ºÁÃë  
 //    if (SCB_CCR_IC_Msk == (SCB_CCR_IC_Msk & SCB->CCR)) {   
 //        SCB_DisableICache();

@@ -1,20 +1,4 @@
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【平    台】龙邱i.MX RT1052核心板-智能车板
-【编    写】CHIUSIR
-【E-mail  】chiusir@163.com
-【软件版本】V1.0
-【最后更新】2018年2月1日
-【相关信息参考下列地址】
-【网    站】http://www.lqist.cn
-【淘宝店铺】http://shop36265907.taobao.com
-------------------------------------------------
-【dev.env.】IAR8.20.1及以上版本
-【Target 】 i.MX RT1052
-【Crystal】 24.000Mhz
-【ARM PLL】 1200MHz
-【SYS PLL】 528MHz
-【USB PLL】 480MHz
-================================================
+/***********************************************************************************
 编码器接线：
 G13--A相
 F14--B相
@@ -31,20 +15,22 @@ J4 Z相
 C11   A相
 B11   B相或者方向
 //C10   Z相
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+***********************************************************************************/
 #include "include.h"	
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
-【功能说明】脉冲正交解码功能引脚初始化
-【软件版本】V1.0
-【最后更新】2018年11月24日 
-【函数名】
-【返回值】无
-【参数值】无
-【实例】
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-void LQ_ENC_InitPin(uint8_t enc_num)
+/************************************************************************************/
+//【作  者】Z
+//功能说明】脉冲正交解码功能引脚初始化
+//【软件版本】V1.0
+//【最后更新】
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】
+/************************************************************************************/
+
+
+void My_ENC_InitPin(uint8_t enc_num)  //ENC管脚初始化
 {
     CLOCK_EnableClock(kCLOCK_Iomuxc);          /* 打开io时钟 */
     
@@ -100,21 +86,23 @@ void LQ_ENC_InitPin(uint8_t enc_num)
     }
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】Z
-【功能说明】脉冲正交解码功能初始化
-【软件版本】V1.0
-【最后更新】2018年11月24日 
-【函数名】
-【返回值】无
-【参数值】无
-【实例】 LQ_ENC_Init(ENC1)  //初始化ENC1模块
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
-void LQ_ENC_Init(ENC_Type *base)
+/*************************************************************************************/
+
+//【功能说明】脉冲正交解码功能初始化
+//【软件版本】V1.0
+//【最后更新】2018年11月24日 
+//【函数名】
+//【返回值】无
+//【参数值】无
+//【实例】 LQ_ENC_Init(ENC1)  //初始化ENC1模块
+/*************************************************************************************/
+
+
+void My_ENC_Init(ENC_Type *base)  
 {
     if(base == ENC1)   //ECR 
     {
-        LQ_ENC_InitPin(1); //管脚复用选择
+        My_ENC_InitPin(1); //管脚复用选择
         XBARA_Init(XBARA1);    //初始化XBARA1模块
         
         /*将单片机引脚连接到ENC1的内部触发信号上*/
@@ -124,7 +112,7 @@ void LQ_ENC_Init(ENC_Type *base)
     }
     else if(base == ENC2) //ECL
     {
-        LQ_ENC_InitPin(2); //管脚复用选择
+        My_ENC_InitPin(2); //管脚复用选择
         XBARA_Init(XBARA1);    //初始化XBARA1模块
         
         /*将单片机引脚连接到ENC2的内部触发信号上*/
@@ -134,7 +122,7 @@ void LQ_ENC_Init(ENC_Type *base)
     }
     else if(base == ENC3)
     {
-        LQ_ENC_InitPin(3); //管脚复用选择
+        My_ENC_InitPin(3); //管脚复用选择
         /*用户可自行修改*/
         XBARA_Init(XBARA1);    //初始化XBARA？模块  可选参数XBARA1
         
@@ -146,7 +134,7 @@ void LQ_ENC_Init(ENC_Type *base)
     }
     else if(base == ENC4)
     {
-        LQ_ENC_InitPin(4); //管脚复用选择
+        My_ENC_InitPin(4); //管脚复用选择
         /*用户可自行修改*/
         XBARA_Init(XBARA1);    //初始化XBARA？模块  可选参数XBARA1
         
@@ -186,23 +174,24 @@ void LQ_ENC_Init(ENC_Type *base)
     
 }
 
-/*LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
-【作  者】CHIUSIR
-【功能说明】测试脉冲正交解码功能
-【软件版本】V1.0
-【最后更新】2018年11月24日 
-【函数名】
-【返回值】无
-【参数值】无
-QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
+/*************************************************************************************/
+//【作  者】CHIUSIR
+///【功能说明】测试脉冲正交解码功能
+//【软件版本】V1.0
+//【最后更新】
+//【函数名】
+//【返回值】无
+//【参数值】无
+/*************************************************************************************/
+
 void Test_ENCoder(void)
 {   
     TFTSPI_Init();               //TFT1.8初始化 
     TFTSPI_CLS(u16BLUE);        //清屏
-    LQ_ENC_Init(ENC1);   //正交解码初始化
-    LQ_ENC_Init(ENC2);
-    LQ_ENC_Init(ENC3);
-    LQ_ENC_Init(ENC4);
+    My_ENC_Init(ENC1);   //正交解码初始化
+    My_ENC_Init(ENC2);
+    My_ENC_Init(ENC3);
+    My_ENC_Init(ENC4);
     short velocity1, velocity2, velocity3, velocity4;
     char txt[16];
     printf("\r\n编码器正交解码测试:\r\n");    

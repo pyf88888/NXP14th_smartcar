@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\快速访问\Desktop\RT1052\IAR\settings\LQ_RT1052LCD.sdram_release.general.xcl" --backend -f "D:\快速访问\Desktop\RT1052\IAR\settings\LQ_RT1052LCD.sdram_release.driver.xcl" 
+"H:\IAR\common\bin\cspybat" -f "F:\A飞卡\NXP14th_smartcar\settings\LQ_RT1052LCD.sdram_release.general.xcl" --backend -f "F:\A飞卡\NXP14th_smartcar\settings\LQ_RT1052LCD.sdram_release.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"D:\Program Files (x86)\IAR Systems\Embedded Workbench 8.0\common\bin\cspybat" -f "D:\快速访问\Desktop\RT1052\IAR\settings\LQ_RT1052LCD.sdram_release.general.xcl" "--debug_file=%~1" --backend -f "D:\快速访问\Desktop\RT1052\IAR\settings\LQ_RT1052LCD.sdram_release.driver.xcl" 
+"H:\IAR\common\bin\cspybat" -f "F:\A飞卡\NXP14th_smartcar\settings\LQ_RT1052LCD.sdram_release.general.xcl" "--debug_file=%~1" --backend -f "F:\A飞卡\NXP14th_smartcar\settings\LQ_RT1052LCD.sdram_release.driver.xcl" 
 
 @echo off 
 :end

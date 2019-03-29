@@ -83,7 +83,7 @@ void LQ_init9AX(void)
 
 void Test_9AX(void)
 {
-    LQ_Camera_Init();
+    My_Camera_Init();
     int16_t u16data[9];  //存放读取传感器 数据
     TFTSPI_Init();               //TFT1.8初始化  
     TFTSPI_CLS(u16BLUE);           //清屏

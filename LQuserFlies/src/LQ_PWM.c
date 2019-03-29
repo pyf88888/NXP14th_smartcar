@@ -776,7 +776,7 @@ void Test_Servo_K(void)
     TFTSPI_Init();                //TFT1.8初始化  
     TFTSPI_CLS(u16BLUE);          //清屏
     LQ_KEY_Init();                //按键及输入口初始化   
-    LQADC_Init(ADC2);             //ADC初始化
+    My_ADC_Init(ADC2);             //ADC初始化
     /*初始化舵机PWM接口 */
     LQ_PWM_Init(PWM1, kPWM_Module_3, kPWM_PwmA_B, 2000);//PWM的最低频率 = 6250 000 / VAL1  = 96Hz     L5 M5
     Servo_K_pidInit(12000, 300);                        //初始化PID控制器
